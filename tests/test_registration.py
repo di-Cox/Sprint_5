@@ -29,8 +29,14 @@ def test_successful_registration(driver):
     # Нажимаем кнопку "Зарегистрироваться"
     driver.find_element(*Locators.button_register).click()
 
-    # Ожидаем отображение кнопки "Войти" после успешной регистрации
-    WebDriverWait(driver, 8).until(EC.visibility_of_element_located(Locators.button_login))
+    # Ждём появления кнопки "Войти"
+    WebDriverWait(driver, 8).until(
+        EC.visibility_of_element_located(Locators.button_login))
+
+    # Проверяем, что после успешной регистрации действительно появилась кнопка "Войти"
+    assert driver.find_element(*Locators.button_login).is_displayed(), \
+        "Кнопка 'Войти' не отобразилась после регистрации"
+
 
 # Тест на проверку вывода ошибки при некорректном пароле
 def test_incorrect_password_error(driver):
@@ -48,3 +54,7 @@ def test_incorrect_password_error(driver):
 
     # Ожидаем отображение сообщения об ошибке некорректного пароля
     WebDriverWait(driver, 8).until(EC.visibility_of_element_located(Locators.message_incorrect_password))
+
+    # Проверка: сообщение об ошибке действительно отображается
+    assert driver.find_element(*Locators.message_incorrect_password).is_displayed(), \
+        "Сообщение об ошибке некорректного пароля не появилось"

@@ -97,19 +97,3 @@ class Locators:
 
     # Текстовая надпись "Начинки"
     section_filling = (By.XPATH, '//h2[text()="Начинки"]')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
