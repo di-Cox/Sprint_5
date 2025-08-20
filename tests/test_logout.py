@@ -5,39 +5,40 @@ from curl import *
 from data import MyPersonalData
 
 
-# Тест проверяет выхода пользователя из личного кабинета
-def test_logout_from_personal_account(driver):
-    # Заходим на главную страницу
-    driver.get(main_site)
+class TestLogout:
 
-    # Нажимаем кнопку "Личный кабинет" на главной странице
-    driver.find_element(*Locators.button_personal_account).click()
+    # Тест проверяет выход пользователя из личного кабинета
+    def test_logout_from_personal_account(self, driver):
+        # Заходим на главную страницу
+        driver.get(main_site)
 
-    # Заполняем поле "Email" для входа
-    driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
+        # Нажимаем кнопку "Личный кабинет" на главной странице
+        driver.find_element(*Locators.button_personal_account).click()
 
-    # Заполняем поле "Пароль" для входа
-    driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
+        # Заполняем поле "Email" для входа
+        driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_login).click()
+        # Заполняем поле "Пароль" для входа
+        driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
 
-    # Снова переходим в личный кабинет, чтобы дождаться полной загрузки страницы
-    driver.find_element(*Locators.button_personal_account).click()
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_login).click()
 
-    # Ожидаем появления кнопки "Профиль" для подтверждения загрузки личного кабинета
-    WebDriverWait(driver, 8).until(
-        EC.visibility_of_element_located(Locators.button_inscription_profile)
-    )
+        # Снова переходим в личный кабинет
+        driver.find_element(*Locators.button_personal_account).click()
 
-    # Нажимаем кнопку "Выйти"
-    driver.find_element(*Locators.button_inscription_exit).click()
+        # Ожидаем появления кнопки "Профиль" (подтверждение загрузки личного кабинета)
+        WebDriverWait(driver, 8).until(
+            EC.visibility_of_element_located(Locators.button_inscription_profile)
+        )
 
-    # Ожидаем появления кнопки "Войти" после выхода из аккаунта
-    login_button = WebDriverWait(driver, 8).until(
-        EC.visibility_of_element_located(Locators.button_login)
-    )
+        # Нажимаем кнопку "Выйти"
+        driver.find_element(*Locators.button_inscription_exit).click()
 
-    # Проверяем, что после выхода действительно отображается кнопка "Войти"
-    assert login_button.text == "Войти"
+        # Ожидаем появления кнопки "Войти" после выхода
+        login_button = WebDriverWait(driver, 8).until(
+            EC.visibility_of_element_located(Locators.button_login)
+        )
 
+        # Проверяем, что после выхода действительно отображается кнопка "Войти"
+        assert login_button.text == "Войти"

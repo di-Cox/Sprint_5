@@ -6,108 +6,112 @@ from selenium.webdriver.support import expected_conditions as EC
 from curl import *
 
 
-# Тест проверки входа через кнопку "Войти в аккаунт" на главной странице Stellar Burgers
-def test_login_via_login_to_account_button(driver):
-    # Заходим на главную страницу
-    driver.get(main_site)
+class TestLogin:
 
-    # Нажимаем кнопку "Войти в аккаунт"
-    driver.find_element(*Locators.button_login_to_account).click()
+    # Тест проверки входа через кнопку "Войти в аккаунт" на главной странице Stellar Burgers
+    def test_login_via_login_to_account_button(self, driver):
+        # Заходим на главную страницу
+        driver.get(main_site)
 
-    # Заполняем поле Email
-    driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
+        # Нажимаем кнопку "Войти в аккаунт"
+        driver.find_element(*Locators.button_login_to_account).click()
 
-    # Заполняем поле Пароль
-    driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
+        # Заполняем поле Email
+        driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_login).click()
+        # Заполняем поле Пароль
+        driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
 
-    # Ожидаем появления кнопки "Оформить заказ"
-    place_order_button = WebDriverWait(driver, 15).until(
-        EC.visibility_of_element_located(Locators.button_place_an_order)
-    )
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_login).click()
 
-    # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
-    assert place_order_button.text == "Оформить заказ"
+        # Ожидаем появления кнопки "Оформить заказ"
+        place_order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(Locators.button_place_an_order)
+        )
 
-# Тест проверки входа через кнопку "Личный кабинет" на странице Stellar Burgers
-def test_login_via_personal_account_button(driver):
-    # Заходим на главную страницу
-    driver.get(main_site)
+        # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
+        assert place_order_button.text == "Оформить заказ"
 
-    # Нажимаем кнопку "Личный кабинет"
-    driver.find_element(*Locators.button_personal_account).click()
+    # Тест проверки входа через кнопку "Личный кабинет" на главной странице Stellar Burgers
+    def test_login_via_personal_account_button(self, driver):
+        # Заходим на главную страницу
+        driver.get(main_site)
 
-    # Заполняем поле Email
-    driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
+        # Нажимаем кнопку "Личный кабинет"
+        driver.find_element(*Locators.button_personal_account).click()
 
-    # Заполняем поле Пароль
-    driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
+        # Заполняем поле Email
+        driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_login).click()
+        # Заполняем поле Пароль
+        driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
 
-    # Ожидаем появления кнопки "Оформить заказ"
-    place_order_button = WebDriverWait(driver, 15).until(
-        EC.visibility_of_element_located(Locators.button_place_an_order)
-    )
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_login).click()
 
-    # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
-    assert place_order_button.text == "Оформить заказ"
+        # Ожидаем появления кнопки "Оформить заказ"
+        place_order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(Locators.button_place_an_order)
+        )
 
-# Тест проверки входа через кнопку "Войти" в форме регистрации /register
-def test_login_via_registration_page(driver):
-    # Заходим на страницу регистрации
-    driver.get(register_site)
+        # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
+        assert place_order_button.text == "Оформить заказ"
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_inscription_login).click()
+    # Тест проверки входа через кнопку "Войти" в форме регистрации /register
+    def test_login_via_registration_page(self, driver):
+        # Заходим на страницу регистрации
+        driver.get(register_site)
 
-    # Заполняем поле Email
-    driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_inscription_login).click()
 
-    # Заполняем поле Пароль
-    driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
+        # Заполняем поле Email
+        driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_login).click()
+        # Заполняем поле Пароль
+        driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
 
-    # Ожидаем появления кнопки "Оформить заказ"
-    place_order_button = WebDriverWait(driver, 15).until(
-        EC.visibility_of_element_located(Locators.button_place_an_order)
-    )
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_login).click()
 
-    # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
-    assert place_order_button.text == "Оформить заказ"
+        # Ожидаем появления кнопки "Оформить заказ"
+        place_order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(Locators.button_place_an_order)
+        )
 
-# Тест проверки входа через кнопку "Войти" в форме восстановления пароля
-def test_login_via_recover_password(driver):
-    # Заходим на страницу входа
-    driver.get(login_site)
+        # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
+        assert place_order_button.text == "Оформить заказ"
 
-    # Нажимаем кнопку "Восстановить пароль"
-    driver.find_element(*Locators.button_inscription_recover_password).click()
+    # Тест проверки входа через кнопку "Войти" в форме восстановления пароля
+    def test_login_via_recover_password(self, driver):
+        # Заходим на страницу входа
+        driver.get(login_site)
 
-    # Ждем загрузку кнопки "Войти"
-    WebDriverWait(driver, 8).until(EC.visibility_of_element_located(Locators.button_inscription_login))
+        # Нажимаем кнопку "Восстановить пароль"
+        driver.find_element(*Locators.button_inscription_recover_password).click()
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_inscription_login).click()
+        # Ждем загрузку кнопки "Войти"
+        WebDriverWait(driver, 8).until(
+            EC.visibility_of_element_located(Locators.button_inscription_login)
+        )
 
-    # Заполняем поле Email
-    driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_inscription_login).click()
 
-    # Заполняем поле Пароль
-    driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
+        # Заполняем поле Email
+        driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_login).click()
+        # Заполняем поле Пароль
+        driver.find_element(*Locators.input_field_password).send_keys(MyPersonalData.password)
 
-    # Ожидаем появления кнопки "Оформить заказ"
-    place_order_button = WebDriverWait(driver, 15).until(
-        EC.visibility_of_element_located(Locators.button_place_an_order)
-    )
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_login).click()
 
-    # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
-    assert place_order_button.text == "Оформить заказ"
+        # Ожидаем появления кнопки "Оформить заказ"
+        place_order_button = WebDriverWait(driver, 15).until(
+            EC.visibility_of_element_located(Locators.button_place_an_order)
+        )
+
+        # Проверяем, что кнопка "Оформить заказ" действительно отображается на странице
+        assert place_order_button.text == "Оформить заказ"

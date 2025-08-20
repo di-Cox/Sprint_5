@@ -79,5 +79,3 @@ class TestConstructorSections:
 
         # Проверяем, что список начинок отображается
         assert driver.find_element(*Locators.section_filling).is_displayed()
-
-

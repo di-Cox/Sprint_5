@@ -5,56 +5,59 @@ from data import MyPersonalData
 from locators import Locators
 from curl import *
 
-# Тест проверяет успешную регистрацию нового пользователя
-def test_successful_registration(driver):
-    # Заходим на страницу входа
-    driver.get(login_site)
 
-    # Нажимаем на кнопку "Зарегистрироваться"
-    driver.find_element(*Locators.button_inscription_register).click()
+class TestRegistration:
+    # Тест проверяет успешную регистрацию нового пользователя
+    def test_successful_registration(self, driver):
+        # Заходим на страницу входа
+        driver.get(login_site)
 
-    # Генерируем email и пароль с помощью geniration_ep.py
-    generator = EmailPasswordGenerator()
-    email, password = generator.generate()
+        # Нажимаем на кнопку "Зарегистрироваться"
+        driver.find_element(*Locators.button_inscription_register).click()
 
-    # Заполняем поле "Имя" (используем имя из data.py)
-    driver.find_element(*Locators.input_name).send_keys(MyPersonalData.name)
+        # Генерируем email и пароль с помощью geniration_ep.py
+        generator = EmailPasswordGenerator()
+        email, password = generator.generate()
 
-    # Заполняем поле "Email" (сгенерированный email)
-    driver.find_element(*Locators.input_email).send_keys(email)
+        # Заполняем поле "Имя" (используем имя из data.py)
+        driver.find_element(*Locators.input_name).send_keys(MyPersonalData.name)
 
-    # Заполняем поле "Пароль" (сгенерированный пароль)
-    driver.find_element(*Locators.input_password).send_keys(password)
+        # Заполняем поле "Email" (сгенерированный email)
+        driver.find_element(*Locators.input_email).send_keys(email)
 
-    # Нажимаем кнопку "Зарегистрироваться"
-    driver.find_element(*Locators.button_register).click()
+        # Заполняем поле "Пароль" (сгенерированный пароль)
+        driver.find_element(*Locators.input_password).send_keys(password)
 
-    # Ждём появления кнопки "Войти"
-    WebDriverWait(driver, 8).until(
-        EC.visibility_of_element_located(Locators.button_login))
+        # Нажимаем кнопку "Зарегистрироваться"
+        driver.find_element(*Locators.button_register).click()
 
-    # Проверяем, что после успешной регистрации действительно появилась кнопка "Войти"
-    assert driver.find_element(*Locators.button_login).is_displayed(), \
-        "Кнопка 'Войти' не отобразилась после регистрации"
+        # Ждём появления кнопки "Войти"
+        WebDriverWait(driver, 8).until(
+            EC.visibility_of_element_located(Locators.button_login))
 
+        # Проверяем, что после успешной регистрации действительно появилась кнопка "Войти"
+        assert driver.find_element(*Locators.button_login).is_displayed(), \
+            "Кнопка 'Войти' не отобразилась после регистрации"
 
-# Тест на проверку вывода ошибки при некорректном пароле
-def test_incorrect_password_error(driver):
-    # Заходим на страницу входа
-    driver.get(login_site)
+    # Тест на проверку вывода ошибки при некорректном пароле
+    def test_incorrect_password_error(self, driver):
+        # Заходим на страницу входа
+        driver.get(login_site)
 
-    # Заполняем поле "Email"
-    driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
+        # Заполняем поле "Email"
+        driver.find_element(*Locators.input_field_email).send_keys(MyPersonalData.email)
 
-    # Заполняем поле "Пароль" некорректным значением
-    driver.find_element(*Locators.input_field_password).send_keys('12345')
+        # Заполняем поле "Пароль" некорректным значением
+        driver.find_element(*Locators.input_field_password).send_keys('12345')
 
-    # Нажимаем кнопку "Войти"
-    driver.find_element(*Locators.button_login).click()
+        # Нажимаем кнопку "Войти"
+        driver.find_element(*Locators.button_login).click()
 
-    # Ожидаем отображение сообщения об ошибке некорректного пароля
-    WebDriverWait(driver, 8).until(EC.visibility_of_element_located(Locators.message_incorrect_password))
+        # Ожидаем отображение сообщения об ошибке некорректного пароля
+        WebDriverWait(driver, 8).until(
+            EC.visibility_of_element_located(Locators.message_incorrect_password)
+        )
 
-    # Проверка: сообщение об ошибке действительно отображается
-    assert driver.find_element(*Locators.message_incorrect_password).is_displayed(), \
-        "Сообщение об ошибке некорректного пароля не появилось"
+        # Проверка: сообщение об ошибке действительно отображается
+        assert driver.find_element(*Locators.message_incorrect_password).is_displayed(), \
+            "Сообщение об ошибке некорректного пароля не появилось"
